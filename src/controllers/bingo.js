@@ -2,7 +2,7 @@ const { response } = require('express');
 
 const generateBingo = async (req, res) => {
   try {
-    let numbers = {};
+    let bingo = [];
     let strGame = 'BINGO';
 
     const recursePromise = (arr, cnt, min, max) => {
@@ -21,16 +21,16 @@ const generateBingo = async (req, res) => {
     for (let i = 0; i < strGame.length; i++) {
       let min = i * 15 + 1;
       let max = (i + 1) * 15;
-      let char = strGame.charAt(i);
-      numbers[char] = [];
-      await recursePromise(numbers[char], 5, min, max).then((resp) => {});
+      let char = strGame.charAt(i); //char
+      bingo[i] = {};
+      bingo[i].letter = char;
+      bingo[i].numbers = [];
+      await recursePromise(bingo[i].numbers, 5, min, max).then((resp) => {});
     }
 
-    res.json({
-      ok: true,
-      numbers,
-    });
+    res.json(bingo);
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       ok: false,
       msg: 'Error inesperado... revisar logs',

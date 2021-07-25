@@ -3,9 +3,9 @@ const app = express();
 const path = require('path');
 const router = express.Router();
 
-// CONTROLLERS
-
+// Controllers
 const { generateBingo } = require('./src/controllers/bingo');
+app.use(express.json());
 
 app.get('/', generateBingo);
 
